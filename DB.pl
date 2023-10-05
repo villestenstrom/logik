@@ -24,6 +24,22 @@ member(X,L) :- select(X,L,_).
 
 memberchk(X,L) :- select(X,L,_), !.
 
+%1
+?- T=f(a,Y,Z), T=f(X,X,b).
+T = f(a, a, b),
+Y = X, X = a,
+Z = b.
+
+% Förklaring: 
+% I "T=f(a,Y,Z)" så binder T till f(a,Y,Z)
+% Eftersom T redan är bunden till f(a,Y,Z) måste T=f(X,X,b)
+% binda X till a, Y till X (som nu är a) och Z till b.
+% Detta ger alltså svaret:
+% T = f(a,a,b)
+% X = a
+% Y = a
+% Z = b
+
 %2
 remove_duplicates(BaseList, OutList) :-
     remove_duplicates(BaseList, OutList, []).
@@ -88,11 +104,15 @@ path(Start,End,Path) :-
     walk(Start,End,[Start],Q),
     reverse_list(Q, Path).
 
+% base case, start and end are the same
 walk(Start,Start,P,P) :-
     P=[Start].
+
+% current node is next to end node
 walk(Start,End,P,[End|P]) :-
     edge(Start,End).
 
+% We have to traverse atleast more than one node
 walk(Start,End,Used,Path) :-
     %get all nodes from startnode
     edge(Start,C),
