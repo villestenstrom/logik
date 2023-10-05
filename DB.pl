@@ -25,10 +25,10 @@ member(X,L) :- select(X,L,_).
 memberchk(X,L) :- select(X,L,_), !.
 
 %1
-?- T=f(a,Y,Z), T=f(X,X,b).
-T = f(a, a, b),
-Y = X, X = a,
-Z = b.
+% ?- T=f(a,Y,Z), T=f(X,X,b).
+% T = f(a, a, b),
+% Y = X, X = a,
+% Z = b.
 
 % Förklaring: 
 % I "T=f(a,Y,Z)" så binder T till f(a,Y,Z)
@@ -47,27 +47,27 @@ remove_duplicates(BaseList, OutList) :-
 remove_duplicates([], [], _). %basecase
 remove_duplicates([Head|Tail], R, Used) :- %remove_duplicates([1,2,3,2,4,1,3,4], E).
     % check Head is member of Used array, --> then
-    % if Head member of Used -> R=S, UsedC=Used, else, add head to R and add head to Used values
+    % if Head member of Used -> R=X, UsedC=Used, else, add head to R and add head to Used values
     (member(Head, Used) -> 
     (R = X, UsedC = Used); 
     (R = [Head|X], UsedC = [Head|Used])),
     remove_duplicates(Tail, X, UsedC).
 
 %3
-
 %same as sublist
 substring([], []).
 % first value does not matter
 substring([_|T], R) :-
     substring(T, R).
 % same first value, 
-substring([H|T], [H|R]) :-
-    cons_substring(T, R).
+substring([H1|T1], [H1|R1]) :-
+    cons_substring(T1, R1).
+
 
 % input list does not matter (will always be = or longer)
 cons_substring(_, []).
-cons_substring([H|T], [H|R]) :-
-    cons_substring(T, R).
+cons_substring([H2|T2], [H2|R2]) :-
+    cons_substring(T2, R2).
 
 partstring([], 0, []).
 partstring(BaseList, L, F) :- 
@@ -104,15 +104,12 @@ path(Start,End,Path) :-
     walk(Start,End,[Start],Q),
     reverse_list(Q, Path).
 
-% base case, start and end are the same
 walk(Start,Start,P,P) :-
     P=[Start].
 
-% current node is next to end node
 walk(Start,End,P,[End|P]) :-
     edge(Start,End).
 
-% We have to traverse atleast more than one node
 walk(Start,End,Used,Path) :-
     %get all nodes from startnode
     edge(Start,C),
