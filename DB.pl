@@ -45,12 +45,17 @@ remove_duplicates(BaseList, OutList) :-
     remove_duplicates(BaseList, OutList, []).
 
 remove_duplicates([], [], _). %basecase
-remove_duplicates([Head|Tail], R, Used) :- %remove_duplicates([1,2,3,2,4,1,3,4], E).
-    % check Head is member of Used array, --> then
-    % if Head member of Used -> R=X, UsedC=Used, else, add head to R and add head to Used values
+remove_duplicates([Head|Tail], R, Used) :-
+    % if Head is member of Used array 
+    %   --> if Head is member of Used -> R = X, UsedC = Used 
+    %   --> else, add head to R and add head to Used values
     (member(Head, Used) -> 
     (R = X, UsedC = Used); 
     (R = [Head|X], UsedC = [Head|Used])),
+
+    % If the current head is not a member of the used array,
+    % X will have been updated with the head and UsedC will have been updated with the head
+    % Otherwise, there will be no change to X and UsedC
     remove_duplicates(Tail, X, UsedC).
 
 %3
