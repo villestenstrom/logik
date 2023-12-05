@@ -1,0 +1,27 @@
+% Adjacency lists of LTS
+[
+[open, [ scan, close]], 
+[scan, [insert, close]], 
+[insert, [pay, close]],
+[pay, [receit, close]],
+[receit, [close]],
+[close, [open]]
+].
+
+% Labeling of LTS
+[
+[open, [opened]],
+[scan, [opened, scanned]], 
+[insert, [opened, scanned, inserted]],
+[pay, [opened, scanned, inserted, payed]],
+[receit, [opened, scanned, inserted, payed, receited]],
+[close, [closed]]
+].
+
+open.
+
+% there exists a path where at some time the next state you will have either scanned or closed
+ef(ax(or(scanned, closed))).
+
+% invalid - there is no state where you've payed but didn't scan
+ef(and(payed, neg(scanned))

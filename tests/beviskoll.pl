@@ -142,12 +142,12 @@ verify(InputFileName) :-
  
  % sist(List, Element), hjälpklass till impint
  sist([Element], Element).
-	sist([_|Rest], Element) :- sist(Rest, Element).
+
+ sist([_|Rest], Element) :- 
+	sist(Rest, Element).
  
  
  % Del 3: LÅDOR
- 
- 
  % Om svansen är tom har vi nått slutet av lådan
  kontrolleraBox(_Prems, _Goal, [], _Giltig).
  
@@ -172,4 +172,3 @@ verify(InputFileName) :-
  % Om nuvarande raden inte är en låda så går vi ner en rad och kollar igen
  hittaBox(LetaEfter, [_|Giltig], Box) :-
 	hittaBox(LetaEfter, Giltig, Box).
- 

@@ -1,0 +1,6 @@
+
+
+Literals will always match.
+Succeeds when: F is True at the current state.
+
+
